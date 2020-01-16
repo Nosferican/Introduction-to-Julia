@@ -1,0 +1,22 @@
+# docker-compose -f docker-compose.yml up -d container_name
+version: "3.7"
+services:
+  # vscode
+  vscode:
+    image: nosferican/docker-vscode-julia:latest
+    container_name: vscode
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: bind
+        source: ./..
+        target: /home/coder/project
+      - type: bind
+        source: ./dev/julia/.julia
+        target: /home/coder/.julia
+    environment:
+      TZ: America/New_York
+    command: --auth=none

@@ -1,0 +1,115 @@
+# Julia Types
+
+The Julia programming language uses multiple dispatch as one of the language designs.
+
+A function is a collection of methods which depend on the argument types.
+
+For the game of Rock, Paper, Scissors we can implement it with types and multiple dispatch.
+
+- Define the types
+
+```julia
+"""
+    Hand
+
+One of the potential hands in the game Rock, Paper, and Scissors.
+"""
+abstract type Hand end
+struct Rock <: Hand end
+struct Paper <: Hand end
+struct Scissors <: Hand end
+```
+
+```julia
+typeof(Rock())
+supertype(Rock)
+subtypes(Hand)
+```
+
+```julia
+@enum Result Lose = -1 Tie = 0 Win = 1
+```
+
+- Define the logic
+
+```julia
+"""
+    play(::Hand, ::Hand)::Result
+
+Plays rock, paper, and scissors.
+
+# Example
+
+julia> play(Rock(), Paper())
+
+"""
+function play end
+play(::Hand, ::Hand) = Lose
+play(::T, ::T) where T <: Hand = Tie
+play(::Rock, ::Scissors) = Win
+play(::Paper, ::Rock) = Win
+play(::Scissors, ::Paper) = Win
+```
+
+```julia
+using Test
+for left ∈ subtypes(Hand)
+    for right ∈ subtypes(Hand)
+        println("$left vs $right: $(play(left(), right()))")
+    end
+end
+@testset begin "Rock, Paper, Scissors"
+    r, p, s = Rock(), Paper(), Scissors()
+    @test play(r, r) == Tie
+    @test play(r, s) == Win
+    @test play(r, p) == Lose
+    @test play(p, p) == Tie
+    @test play(p, r) == Win
+    @test play(p, s) == Lose
+    @test play(s, s) == Tie
+    @test play(s, p) == Win
+    @test play(s, r) == Lose
+end
+```
+
+We can also play many times,
+
+```julia
+using Random
+Random.seed!(0);
+"""
+    play_many_times(n::Integer)::Int
+
+Plays rock, paper, and scissors `n` times are returns the score.
+"""
+function play_many_times(n::Integer)
+    hands = [ x() for x ∈ subtypes(Hand) ]
+    score = 0
+    for trial ∈ 1:n
+        score += Int(play(rand(hands), rand(hands)))
+    end
+    score
+end
+
+distribution = [ play_many_times(100) for trial ∈ 1:1000 ]
+```
+
+We can plot the result using the Plots package,
+
+```julia
+using Distributions
+d = fit(Normal, distribution)
+using StatsPlots
+plt = density(distribution, label = "Distribution")
+plot!(d, label = "Empirical Fit")
+# x̄, s̄ = params(fit(Normal, distribution))
+```
+
+
+```julia
+
+
+plot(distribution)
+xlab!()
+```
+

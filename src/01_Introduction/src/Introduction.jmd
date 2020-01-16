@@ -1,0 +1,40 @@
+# Introduction to Julia
+
+## Motivation: The Two Language Problem
+
+The two languages problem is the phenomenon where a high productivity dynamic language (e.g., Python, R) is used to develop and prototype, but a low level programming language is used for actual production (C, Java).
+
+Programming languages implementations usually work through compilation or interpretation. Compilation works by translating code into a lower transformation suitable for machine code (i.e., hardware instructions) ahead of execution while interpretation performs the translation closer to run-time. Julia uses a sophisticated implementation of Just-in-Time compilation (JIT) which allows to have a high-level language with the peformance of a compiled programming language.
+
+For example, much of the functionality commonly used in dynamic languages is actually implemented in a low language and the implementation called from the second language (e.g., R's data.table is ≈ 65% C and 35% R). As a consequence, many times vectorization and other styles are a requirement for efficient code.
+
+## History
+
+- The Julia language was developed at MIT by Dr. Viral Shah, Prof. Alan Edelman, Dr. Jeff Bezanson, and Stefan Karpinski circa 2012.
+- Julia v1.0 was released on 2018.
+
+## Getting Started
+
+- Julia is available cross platform for Windows, OSX, Linux, and FreeBSD.
+- Integrated Development Environments (IDE) are available such as: Visual Studio Code, Atom, and Jupyter.
+- We will be using a Docker container for Julia in order to standardize the experience during the workshop.
+
+1. Download and install [Docker](https://www.docker.com/products/docker-desktop)
+2. Clone the workshop [repository](https://github.com/Nosferican/Introduction-to-Julia) (you may do so using a [GUI](https://desktop.github.com/))
+3. Navigate to the repository and run a container for the workshop through `docker-compose -f docker/docker-compose.yml up -d`
+4. Using a web browser access: [http://localhost:8080/?folder=/home/coder/project](http://localhost:8080/?folder=/home/coder/project)
+5. Open the repository from the container
+
+## Summary of Resources
+
+- Documentation
+  - [Manual](https://docs.julialang.org/en/v1/index.html)
+- Exercises
+  - [Exercises](https://exercism.io/tracks/julia)
+- Community
+  - [Discourse](https://discourse.julialang.org/)
+  - [Slack](https://julialang.slack.com/)
+- Tutorials
+  - [QuantEcon](https://julia.quantecon.org/index_toc.html)
+- Short Courses
+  - [Julia Academy](https://juliaacademy.com/)
